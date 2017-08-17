@@ -20,6 +20,7 @@
 #include "system.h"
 #include "Visualisation.h"
 #include "GUIInfoManager.h"
+#include "utils/fft.h"
 #include "guiinfo/GUIInfoLabels.h"
 #include "Application.h"
 #include "guilib/GraphicContext.h"
@@ -209,7 +210,12 @@ bool CVisualisation::OnAction(VIS_ACTION action, void *param)
         const CMusicInfoTag* tag = (const CMusicInfoTag*)param;
         std::string artist(tag->GetArtistString());
         std::string albumArtist(tag->GetAlbumArtistString());
+
         std::string genre(StringUtils::Join(tag->GetGenre(), g_advancedSettings.m_musicItemSeparator));
+
+      //  std::string artist(tag->GetArtist(), g_advancedSettings.m_musicItemSeparator);
+      //  CStdString albumArtist(StringUtils::Join(tag->GetAlbumArtist(), g_advancedSettings.m_musicItemSeparator));
+       // CStdString genre(StringUtils::Join(tag->GetGenre(), g_advancedSettings.m_musicItemSeparator));
         
         VisTrack track;
         track.title       = tag->GetTitle().c_str();
@@ -273,11 +279,24 @@ void CVisualisation::OnAudioData(const float* pAudioData, int iAudioDataLength)
   if (m_bWantsFreq)
   {
     const float *psAudioData = ptrAudioBuffer->Get();
+    memcpy(m_fFreq, psAudioData, AUDIO_BUFFER_SIZE * sizeof(float));
 
     if (!m_transform)
       m_transform.reset(new RFFT(AUDIO_BUFFER_SIZE/2, false)); // half due to stereo
 
     m_transform->calc(psAudioData, m_fFreq);
+
+    // FFT the data
+   // twochanwithwindow(m_fFreq, AUDIO_BUFFER_SIZE);
+
+    // Normalize the data
+    float fMinData = (float)AUDIO_BUFFER_SIZE * AUDIO_BUFFER_SIZE * 3 / 8 * 0.5 * 0.5; // 3/8 for the Hann window, 0.5 as minimum amplitude
+    float fInvMinData = 1.0f/fMinData;
+    for (int i = 0; i < AUDIO_BUFFER_SIZE + 2; i++)
+    {
+      m_fFreq[i] *= fInvMinData;
+    }
+
 
     // Transfer data to our visualisation
     AudioData(psAudioData, iAudioDataLength, m_fFreq, AUDIO_BUFFER_SIZE/2); // half due to complex-conjugate
