@@ -89,10 +89,17 @@ namespace ADDON
     bool GetPresets();
     bool GetSubModules();
 
+    // attributes of the viewport we render to
+    int m_xPos;
+    int m_yPos;
+    int m_width;
+    int m_height;
+
     // cached preset list
     std::vector<std::string> m_presets;
     // cached submodule list
     std::vector<std::string> m_submodules;
+    int m_currentModule;
 
     // audio properties
     int m_iChannels;
@@ -104,6 +111,7 @@ namespace ADDON
     float m_fFreq[AUDIO_BUFFER_SIZE];         // Frequency data
     bool m_hasPresets;
     std::unique_ptr<RFFT> m_transform;
+    bool m_bCalculate_Freq;       // True if the vis wants freq data
 
     // track information
     std::string m_AlbumThumb;
