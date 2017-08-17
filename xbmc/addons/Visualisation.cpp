@@ -343,27 +343,27 @@ void CVisualisation::ClearBuffers()
 bool CVisualisation::UpdateTrack()
 {
   bool handled = false;
-  if (Initialized())
-  {
+ // if (Initialized())
+ // {
     // get the current album art filename
-    m_AlbumThumb = CSpecialProtocol::TranslatePath(g_infoManager.GetImage(MUSICPLAYER_COVER, WINDOW_INVALID));
+///    m_AlbumThumb = CSpecialProtocol::TranslatePath(g_infoManager.GetImage(MUSICPLAYER_COVER, WINDOW_INVALID));
 
     // get the current track tag
-    const CMusicInfoTag* tag = g_infoManager.GetCurrentSongTag();
+ //   const CMusicInfoTag* tag = g_infoManager.GetCurrentSongTag();
 
-    if (m_AlbumThumb == "DefaultAlbumCover.png")
-      m_AlbumThumb = "";
-    else
-      CLog::Log(LOGDEBUG,"Updating visualisation albumart: %s", m_AlbumThumb.c_str());
+  //  if (m_AlbumThumb == "DefaultAlbumCover.png")
+   //   m_AlbumThumb = "";
+   // else
+      CLog::Log(LOGDEBUG,"SKipping Updating visualisation albumart: %s", m_AlbumThumb.c_str());
 
     // inform the visualisation of the current album art
-    if (OnAction( VIS_ACTION_UPDATE_ALBUMART, (void*)( m_AlbumThumb.c_str() ) ) )
-      handled = true;
+   // if (OnAction( VIS_ACTION_UPDATE_ALBUMART, (void*)( m_AlbumThumb.c_str() ) ) )
+     // handled = true;
 
     // inform the visualisation of the current track's tag information
-    if ( tag && OnAction( VIS_ACTION_UPDATE_TRACK, (void*)tag ) )
-      handled = true;
-  }
+  //  if ( tag && OnAction( VIS_ACTION_UPDATE_TRACK, (void*)tag ) )
+     // handled = true;
+ // }
   return handled;
 }
 
