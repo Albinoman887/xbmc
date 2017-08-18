@@ -113,7 +113,7 @@ bool CVisualisation::Create(int x, int y, int w, int h, void *device)
   return false;
 }
 
-void CVisualisation::Start(int iChannels, int iSamplesPerSec, int iBitsPerSample, const std::string &strSongName)
+void CVisualisation::Start(int TTT, int iSamplesPerSec, int iBitsPerSample, const std::string &strSongName)
 {
   // notify visz. that new song has been started
   // pass it the nr of audio channels, sample rate, bits/sample and offcourse the songname
@@ -242,11 +242,21 @@ void CVisualisation::OnInitialize(int iChannels, int iSamplesPerSec, int iBitsPe
   if (!m_pStruct)
     return ;
   CLog::Log(LOGDEBUG, "OnInitialize() started");
+   
+    try
+    {
 
   m_iChannels = iChannels;
   m_iSamplesPerSec = iSamplesPerSec;
   m_iBitsPerSample = iBitsPerSample;
   UpdateTrack();
+
+    }
+    catch (std::exception e)
+    {
+      HandleException(e, "m_pStruct->Start() (CVisualisation::OnInitialize)");
+      return false;
+    }
 
   CLog::Log(LOGDEBUG, "OnInitialize() done");
 }
