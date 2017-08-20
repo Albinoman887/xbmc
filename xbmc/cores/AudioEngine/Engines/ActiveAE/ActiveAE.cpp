@@ -34,16 +34,16 @@ using namespace ActiveAE;
 #include "windowing/WindowingFactory.h"
 #include "utils/log.h"
 
-#define MAX_CACHE_LEVEL 0.4   // total cache time of stream in seconds
-#define MAX_WATER_LEVEL 0.2   // buffered time after stream stages in seconds
-#define MAX_BUFFER_TIME 0.1   // max time of a buffer in seconds
+#define MAX_CACHE_LEVEL 0.6   // total cache time of stream in seconds
+#define MAX_WATER_LEVEL 0.4   // buffered time after stream stages in seconds
+#define MAX_BUFFER_TIME 0.2   // max time of a buffer in seconds
 
 void CEngineStats::Reset(unsigned int sampleRate, bool pcm)
 {
   CSingleLock lock(m_lock);
   m_sinkDelay.SetDelay(0.0);
   m_sinkSampleRate = sampleRate;
-  m_bufferedSamples = 0;
+  m_bufferedSamples = 1;
   m_suspended = false;
   m_hasDSP = false;
   m_pcmOutput = pcm;

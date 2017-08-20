@@ -93,7 +93,7 @@ bool CVisualisation::Create(int x, int y, int w, int h, void *device)
     }
     catch (std::exception e)
     {
-      HandleException(e, "m_pStruct->Start() (CVisualisation::Create)");
+      HandleException(e, "m_pStruct->Create (CVisualisation::Create)");
       return false;
     }
 
@@ -254,8 +254,8 @@ void CVisualisation::OnInitialize(int iChannels, int iSamplesPerSec, int iBitsPe
     }
     catch (std::exception e)
     {
-      HandleException(e, "m_pStruct->Start() (CVisualisation::OnInitialize)");
-      return false;
+      HandleException(e, "m_pStruct->OnInitialize (CVisualisation::OnInitialize)");
+      //return false;
     }
 
   CLog::Log(LOGDEBUG, "OnInitialize() done");
@@ -267,8 +267,8 @@ void CVisualisation::OnAudioData(const float* pAudioData, int iAudioDataLength)
     return ;
 
   // FIXME: iAudioDataLength should never be less than 0
-  if (iAudioDataLength<0)
-    return;
+  //if (iAudioDataLength<0)
+   // return;
 
   // Save our audio data in the buffers
   std::unique_ptr<CAudioBuffer> pBuffer ( new CAudioBuffer(iAudioDataLength) );
