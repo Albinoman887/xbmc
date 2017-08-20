@@ -235,7 +235,6 @@ uint8_t *CAudioDecoder::GetRawData(int &size)
   }
   return nullptr;
 }
-
 int CAudioDecoder::ReadSamples(int numsamples)
 {
   if (m_status == STATUS_NO_FILE || m_status == STATUS_ENDING || m_status == STATUS_ENDED)
@@ -248,81 +247,49 @@ int CAudioDecoder::ReadSamples(int numsamples)
   // grab a lock to ensure the codec is created at this point.
   CSingleLock lock(m_critSection);
 
-  if (m_codec->m_format.m_dataFormat != AE_FMT_RAW)
+  // Read in more data
+  int maxsize = std::min<int>(INPUT_SAMPLES, m_pcmBuffer.getMaxWriteSize() / (m_codec->m_BitsPerSample >> 3));
+  numsamples = std::min<int>(numsamples, maxsize);
+  numsamples -= (numsamples % m_codec->GetChannelInfo().Count());  // make sure it's divisible by our number of channels
+  if ( numsamples )
   {
-    // Read in more data
-    int maxsize = std::min<int>(INPUT_SAMPLES, m_pcmBuffer.getMaxWriteSize() / (m_codec->m_bitsPerSample >> 3));
-    numsamples = std::min<int>(numsamples, maxsize);
-    numsamples -= (numsamples % GetFormat().m_channelLayout.Count());  // make sure it's divisible by our number of channels
-    if (numsamples)
+    int readSize = 0;
+    int result = m_codec->ReadPCM(m_pcmInputBuffer, numsamples * (m_codec->m_BitsPerSample >> 3), &readSize);
+
+    if (result != READ_ERROR && readSize)
     {
-      int readSize = 0;
-      int result = m_codec->ReadPCM(m_pcmInputBuffer, numsamples * (m_codec->m_bitsPerSample >> 3), &readSize);
+      // move it into our buffer
+      m_pcmBuffer.WriteData((char *)m_pcmInputBuffer, readSize);
 
-      if (result != READ_ERROR && readSize)
+      // update status
+      if (m_status == STATUS_QUEUING && m_pcmBuffer.getMaxReadSize() > m_pcmBuffer.getSize() * 0.9)
       {
-        // move it into our buffer
-        m_pcmBuffer.WriteData((char *)m_pcmInputBuffer, readSize);
-
-        // update status
-        if (m_status == STATUS_QUEUING && m_pcmBuffer.getMaxReadSize() > m_pcmBuffer.getSize() * 0.9)
-        {
-          CLog::Log(LOGINFO, "AudioDecoder: File is queued");
-          m_status = STATUS_QUEUED;
-        }
-
-        if (result == READ_EOF) // EOF reached
-        {
-          // setup ending if we're within set time of the end (currently just EOF)
-          m_eof = true;
-          if (m_status < STATUS_ENDING)
-            m_status = STATUS_ENDING;
-        }
-
-        return RET_SUCCESS;
+        CLog::Log(LOGINFO, "AudioDecoder: File is queued");
+        m_status = STATUS_QUEUED;
       }
-      if (result == READ_ERROR)
+
+      if (result == READ_EOF) // EOF reached
       {
-        // error decoding, lets finish up and get out
-        CLog::Log(LOGERROR, "CAudioDecoder: Error while decoding %i", result);
-        return RET_ERROR;
-      }
-      if (result == READ_EOF)
-      {
-        m_eof = true;
         // setup ending if we're within set time of the end (currently just EOF)
+        m_eof = true;
         if (m_status < STATUS_ENDING)
           m_status = STATUS_ENDING;
       }
+
+      return RET_SUCCESS;
     }
-  }
-  else
-  {
-    if (m_rawBufferSize == 0)
+    if (result == READ_ERROR)
     {
-      int result = m_codec->ReadRaw(&m_rawBuffer, &m_rawBufferSize);
-      if (result == READ_SUCCESS && m_rawBufferSize)
-      {
-        //! @todo trash this useless ringbuffer
-        if (m_status == STATUS_QUEUING)
-        {
-          m_status = STATUS_QUEUED;
-        }
-        return RET_SUCCESS;
-      }
-      else if (result == READ_ERROR)
-      {
-        // error decoding, lets finish up and get out
-        CLog::Log(LOGERROR, "CAudioDecoder: Error while decoding %i", result);
-        return RET_ERROR;
-      }
-      else if (result == READ_EOF)
-      {
-        m_eof = true;
-        // setup ending if we're within set time of the end (currently just EOF)
-        if (m_status < STATUS_ENDING)
-          m_status = STATUS_ENDING;
-      }
+      // error decoding, lets finish up and get out
+      CLog::Log(LOGERROR, "CAudioDecoder: Error while decoding %i", result);
+      return RET_ERROR;
+    }
+    if (result == READ_EOF)
+    {
+      m_eof = true;
+      // setup ending if we're within set time of the end (currently just EOF)
+      if (m_status < STATUS_ENDING)
+        m_status = STATUS_ENDING;
     }
   }
   return RET_SLEEP; // nothing to do
