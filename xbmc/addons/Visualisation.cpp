@@ -242,11 +242,21 @@ void CVisualisation::OnInitialize(int iChannels, int iSamplesPerSec, int iBitsPe
   if (!m_pStruct)
     return ;
   CLog::Log(LOGDEBUG, "OnInitialize() started");
+   
+    try
+    {
 
   m_iChannels = iChannels;
   m_iSamplesPerSec = iSamplesPerSec;
   m_iBitsPerSample = iBitsPerSample;
   UpdateTrack();
+
+    }
+    catch (std::exception e)
+    {
+      HandleException(e, "m_pStruct->Start() (CVisualisation::OnInitialize)");
+      return false;
+    }
 
   CLog::Log(LOGDEBUG, "OnInitialize() done");
 }
