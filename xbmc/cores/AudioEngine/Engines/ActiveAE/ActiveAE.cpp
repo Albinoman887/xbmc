@@ -2146,7 +2146,7 @@ bool CActiveAE::RunStages()
           CSingleLock lock(m_vizLock);
           if (!m_audioCallback.empty() && !m_streams.empty())
           {
-            if (!m_vizInitialized || !m_vizBuffers)
+            if (!m_vizInitialized)
             {
               Configure();
               for (auto& it : m_audioCallback)
@@ -2158,7 +2158,7 @@ bool CActiveAE::RunStages()
             {
               // copy the samples into the viz input buffer
               CSampleBuffer *viz = m_vizBuffersInput->GetFreeBuffer();
-              int samples = out->pkt->nb_samples;
+              int samples = std::min(512, out->pkt->nb_samples);
               int bytes = samples * out->pkt->config.channels / out->pkt->planes * out->pkt->bytes_per_sample;
               for(int i= 0; i < out->pkt->planes; i++)
               {
@@ -2177,7 +2177,7 @@ bool CActiveAE::RunStages()
             while(!m_vizBuffers->m_outputSamples.empty())
             {
               CSampleBuffer *buf = m_vizBuffers->m_outputSamples.front();
-              if ((now - buf->timestamp) < 0)
+              if ((now - buf->timestamp) & 0x80000000)
                 break;
               else
               {
