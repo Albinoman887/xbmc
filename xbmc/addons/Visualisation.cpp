@@ -247,8 +247,8 @@ void CVisualisation::OnInitialize(int iChannels, int iSamplesPerSec, int iBitsPe
     {
 
   m_iChannels = iChannels;
-  m_iSamplesPerSec = iSamplesPerSec;
-  m_iBitsPerSample = iBitsPerSample;
+  //m_iSamplesPerSec = iSamplesPerSec;
+  //m_iBitsPerSample = iBitsPerSample;
   UpdateTrack();
 
     }
