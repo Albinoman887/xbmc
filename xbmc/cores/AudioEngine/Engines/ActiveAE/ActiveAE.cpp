@@ -2214,7 +2214,7 @@ bool CActiveAE::RunStages()
                 break;
               else
               {
-                unsigned int samples = static_cast<unsigned int>(buf->pkt->nb_samples);
+                int samples = std::min(512, buf->pkt->nb_samples);
                 for (auto& it : m_audioCallback)
                   it->OnAudioData((float*)(buf->pkt->data[0]), samples);
                 buf->Return();
