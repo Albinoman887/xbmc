@@ -2870,6 +2870,8 @@ bool CActiveAE::GetCurrentSinkFormat(AEAudioFormat &SinkFormat)
 {
   SinkFormat = m_stats.GetCurrentSinkFormat();
   return true;
+}
+
 AEAudioFormat CActiveAE::GetCurrentSinkFormat()
 {
   return m_stats.GetCurrentSinkFormat();
