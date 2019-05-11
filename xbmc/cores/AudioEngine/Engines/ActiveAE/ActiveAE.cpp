@@ -2234,8 +2234,6 @@ bool CActiveAE::RunStages()
         if (m_mode == MODE_TRANSCODE && m_encoder)
         {
           CSampleBuffer *buf = nullptr;
-          if (out->pkt->nb_samples)
-          {
             buf = m_encoderBuffers->GetFreeBuffer();
             buf->pkt->nb_samples = m_encoder->Encode(out->pkt->data[0], out->pkt->planes*out->pkt->linesize,
                                                      buf->pkt->data[0], buf->pkt->planes*buf->pkt->linesize);
@@ -2243,7 +2241,6 @@ bool CActiveAE::RunStages()
             // set pts of last sample
             buf->pkt_start_offset = buf->pkt->nb_samples;
             buf->timestamp = out->timestamp;
-          }
 
           out->Return();
           out = buf;
