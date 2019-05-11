@@ -2474,7 +2474,7 @@ CSampleBuffer* CActiveAE::SyncStream(CActiveAEStream *stream)
       else
       {
         stream->m_syncState = CAESyncInfo::AESyncState::SYNC_INSYNC;
-        stream->m_syncError.Flush(1000);
+        stream->m_syncError.Flush(2000);
         stream->m_resampleIntegral = 0;
         stream->m_processingBuffers->SetRR(1.0, m_settings.atempoThreshold);
         CLog::Log(LOGDEBUG,"ActiveAE::SyncStream - average error %f below threshold of %f", error, 30.0);
