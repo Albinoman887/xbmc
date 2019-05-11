@@ -2243,7 +2243,6 @@ bool CActiveAE::RunStages()
             // set pts of last sample
             buf->pkt_start_offset = buf->pkt->nb_samples;
             buf->timestamp = out->timestamp;
-          }
 
           out->Return();
           out = buf;
