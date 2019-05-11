@@ -2162,10 +2162,10 @@ bool CActiveAE::RunStages()
       }// for
 
       // finally clamp samples
-      if (out && needClamp)
+      if(out && needClamp)
       {
         int nb_floats = out->pkt->nb_samples * out->pkt->config.channels / out->pkt->planes;
-        for (int i=0; i<out->pkt->planes; i++)
+        for(int i=0; i<out->pkt->planes; i++)
         {
           CAEUtil::ClampArray((float*)out->pkt->data[i], nb_floats);
         }
