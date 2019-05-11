@@ -2623,22 +2623,14 @@ void CActiveAE::Start()
     if (!success)
     {
       CLog::Log(LOGERROR, "ActiveAE::%s - returned error", __FUNCTION__);
-      Dispose();
-      return false;
     }
   }
   else
   {
     CLog::Log(LOGERROR, "ActiveAE::%s - failed to init", __FUNCTION__);
-    Dispose();
-    return false;
   }
 
-  // hook into windowing for receiving display reset events
-  g_Windowing.Register(this);
-
   m_inMsgEvent.Reset();
-  return true;
 }
 
 void CActiveAE::EnumerateOutputDevices(AEDeviceList &devices, bool passthrough)
