@@ -2954,6 +2954,8 @@ bool CActiveAE::CompareFormat(AEAudioFormat &lhs, AEAudioFormat &rhs)
  * later when the engine is idle it will convert the sound to sink format
  */
 
+#define SOUNDBUFFER_SIZE 20480
+
 IAESound *CActiveAE::MakeSound(const std::string& file)
 {
   AVFormatContext *fmt_ctx = nullptr;
