@@ -2872,11 +2872,6 @@ bool CActiveAE::GetCurrentSinkFormat(AEAudioFormat &SinkFormat)
   return true;
 }
 
-AEAudioFormat CActiveAE::GetCurrentSinkFormat()
-{
-  return m_stats.GetCurrentSinkFormat();
-}
-
 void CActiveAE::OnLostDisplay()
 {
   Message *reply;
