@@ -2204,7 +2204,7 @@ bool CActiveAE::RunStages()
             AEDelayStatus status;
             m_stats.GetDelay(status);
             int64_t now = XbmcThreads::SystemClockMillis();
-            int64_t timestamp = now + status.GetDelay() * 1000;
+            int64_t timestamp = now + status.GetDelay() * 2000;
             busy |= m_vizBuffers->ResampleBuffers(timestamp);
             while(!m_vizBuffers->m_outputSamples.empty())
             {
