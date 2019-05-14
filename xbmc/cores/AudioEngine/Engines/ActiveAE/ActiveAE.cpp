@@ -1339,7 +1339,10 @@ void CActiveAE::Configure(AEAudioFormat *desiredFmt)
     // buffers for viz
     if (!(inputFormat.m_dataFormat == AE_FMT_RAW))
     {
-      if (initSink && m_vizBuffers)
+      if (m_vizBuffers &&
+          (initSink ||
+           !(CompareFormat(m_vizBuffersInput->m_format, m_internalFormat)) ||
+           m_vizBuffersInput->m_format.m_frames != m_internalFormat.m_frames))
       {
         m_discardBufferPools.push_back(m_vizBuffers);
         m_vizBuffers = NULL;
