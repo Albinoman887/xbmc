@@ -2213,16 +2213,11 @@ bool CActiveAE::RunStages()
             while(!m_vizBuffers->m_outputSamples.empty())
             {
               CSampleBuffer *buf = m_vizBuffers->m_outputSamples.front();
-              if ((now - buf->timestamp) < 0)
-                break;
-              else
-              {
                 int samples = std::min(512, buf->pkt->nb_samples);
                 for (auto& it : m_audioCallback)
                   it->OnAudioData((float*)(buf->pkt->data[0]), samples);
                 buf->Return();
                 m_vizBuffers->m_outputSamples.pop_front();
-              }
             }
           }
           else if (m_vizBuffers)
