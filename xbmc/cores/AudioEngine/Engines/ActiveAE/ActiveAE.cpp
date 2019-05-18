@@ -2221,7 +2221,7 @@ bool CActiveAE::RunStages()
             }
           }
           else if (m_vizBuffers)
-            m_vizBuffers->Flush();
+              CLog::Log(LOGWARNING,"dummycode", __FUNCTION__);
         }
 
         // mix gui sounds
