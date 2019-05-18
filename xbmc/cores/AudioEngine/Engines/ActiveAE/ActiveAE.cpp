@@ -2180,9 +2180,9 @@ bool CActiveAE::RunStages()
         // viz
         {
           CSingleLock lock(m_vizLock);
-          if (!m_audioCallback.empty() && m_vizBuffers && !m_streams.empty())
+          if (!m_audioCallback.empty() && !m_streams.empty())
           {
-            if (!m_vizInitialized)
+            if (!m_vizInitialized || !m_vizBuffers)
             {
               Configure();
               for (auto& it : m_audioCallback)
