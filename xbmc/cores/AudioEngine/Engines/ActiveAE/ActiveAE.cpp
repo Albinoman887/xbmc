@@ -2200,6 +2200,7 @@ bool CActiveAE::RunStages()
               }
               viz->pkt->nb_samples = samples;
               m_vizBuffers->m_inputSamples.push_back(viz);
+              CLog::Log(LOGDEBUG,"ActiveAE/Viz::%s - copied samples to viz buffer", __FUNCTION__);
             }
             else
               CLog::Log(LOGWARNING,"ActiveAE::%s - viz ran out of free buffers", __FUNCTION__);
