@@ -85,9 +85,9 @@ public:
   void Flush();
   void SetDrain(bool drain);
   void SetRR(double rr);
-  double GetRR() const;
+  double GetRR();
   void FillBuffer();
-  bool DoesNormalize() const;
+  bool DoesNormalize();
   void ForceResampler(bool force);
   AEAudioFormat m_inputFormat;
   std::deque<CSampleBuffer*> m_inputSamples;
@@ -125,7 +125,7 @@ public:
   float GetDelay();
   void Flush();
   void SetTempo(float tempo);
-  float GetTempo() const;
+  float GetTempo();
   void FillBuffer();
   void SetDrain(bool drain);
   std::deque<CSampleBuffer*> m_inputSamples;

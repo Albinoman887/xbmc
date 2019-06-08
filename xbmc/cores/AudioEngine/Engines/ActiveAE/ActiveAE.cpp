@@ -208,7 +208,7 @@ float CEngineStats::GetCacheTotal()
   return MAX_CACHE_LEVEL;
 }
 
-float CEngineStats::GetMaxDelay() const
+float CEngineStats::GetMaxDelay()
 {
   return MAX_CACHE_LEVEL + MAX_WATER_LEVEL + m_sinkCacheTotal;
 }

@@ -73,7 +73,7 @@ public:
   }
 
 protected:
-  double Get() const
+  double Get()
   {
     if(m_count)
       return m_buffer / m_count;
