@@ -314,17 +314,17 @@ int CActiveAEFilter::ProcessFilter(uint8_t **dst_buffer, int dst_samples, uint8_
   return 0;
 }
 
-bool CActiveAEFilter::IsEof() const
+bool CActiveAEFilter::IsEof()
 {
   return m_filterEof;
 }
 
-bool CActiveAEFilter::NeedData() const
+bool CActiveAEFilter::NeedData()
 {
   return m_needData;
 }
 
-bool CActiveAEFilter::IsActive() const
+bool CActiveAEFilter::IsActive()
 {
   if (m_pFilterGraph)
     return true;
@@ -332,7 +332,7 @@ bool CActiveAEFilter::IsActive() const
     return false;
 }
 
-int CActiveAEFilter::GetBufferedSamples() const
+int CActiveAEFilter::GetBufferedSamples()
 {
   int ret = m_SamplesIn - (m_SamplesOut * m_tempo);
   if (m_hasData)
