@@ -184,7 +184,7 @@ public:
   void GetSyncInfo(CAESyncInfo& info, CActiveAEStream *stream);
   float GetCacheTime(CActiveAEStream *stream);
   float GetCacheTotal();
-  float GetMaxDelay() const;
+  float GetMaxDelay();
   float GetWaterLevel();
   void SetSuspended(bool state);
   void SetCurrentSinkFormat(const AEAudioFormat& SinkFormat);
