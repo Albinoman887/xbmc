@@ -59,7 +59,7 @@ CAEStreamParser::CAEStreamParser() :
   av_crc_init(m_crcTrueHD, 0, 16, 0x2D, sizeof(m_crcTrueHD));
 }
 
-double CAEStreamInfo::GetDuration() const
+double CAEStreamInfo::GetDuration()
 {
   double duration = 0;
   switch (m_type)
