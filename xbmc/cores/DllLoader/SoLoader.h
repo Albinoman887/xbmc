@@ -1,3 +1,6 @@
+#ifndef SO_LOADER
+#define SO_LOADER
+
 /*
  *  Copyright (C) 2005-2018 Team Kodi
  *  This file is part of Kodi - https://kodi.tv
@@ -33,3 +36,5 @@ private:
   bool m_bGlobal;
   bool m_bLoaded;
 };
+
+#endif

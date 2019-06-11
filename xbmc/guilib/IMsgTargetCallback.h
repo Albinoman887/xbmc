@@ -13,6 +13,9 @@
 \brief
 */
 
+#ifndef GUILIB_IMSGTARGETCALLBACK
+#define GUILIB_IMSGTARGETCALLBACK
+
 #include "GUIMessage.h"
 
 /*!
@@ -25,3 +28,5 @@ public:
   virtual bool OnMessage(CGUIMessage& message) = 0;
   virtual ~IMsgTargetCallback() = default;
 };
+
+#endif
