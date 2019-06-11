@@ -28,7 +28,7 @@ class CAELimiter
       m_amplify = std::max(std::min(amplify, 1000.0f), 0.0f);
     }
 
-    float GetAmplification() const
+    float GetAmplification()
     {
       return m_amplify;
     }
