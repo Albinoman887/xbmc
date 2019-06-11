@@ -86,7 +86,7 @@ private:
 
       struct handle_closer
       {
-        void operator()(HANDLE h) const
+        void operator()(HANDLE h)
         {
           assert(h != INVALID_HANDLE_VALUE);
           if (h)
