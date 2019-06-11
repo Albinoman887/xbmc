@@ -8,6 +8,7 @@
 
 #pragma once
 
+#if defined (TARGET_ANDROID)
 #include "powermanagement/IPowerSyscall.h"
 
 class CAndroidPowerSyscall : public CPowerSyscallWithoutEvents
@@ -32,3 +33,4 @@ public:
 
   virtual bool PumpPowerEvents(IPowerEventsCallback *callback);
 };
+#endif

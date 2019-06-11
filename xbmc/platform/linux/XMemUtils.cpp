@@ -41,6 +41,8 @@ void _aligned_free(void *p) {
   free(pFull);
 }
 
+#ifndef TARGET_WINDOWS
+
 #if defined(TARGET_POSIX) && !defined(TARGET_DARWIN) && !defined(TARGET_FREEBSD)
 static FILE* procMeminfoFP = NULL;
 #endif
@@ -174,3 +176,6 @@ void GlobalMemoryStatusEx(LPMEMORYSTATUSEX lpBuffer)
   lpBuffer->ullTotalVirtual  = (info.totalram * info.mem_unit);
 #endif
 }
+
+#endif
+

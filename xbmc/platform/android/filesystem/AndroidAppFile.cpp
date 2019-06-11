@@ -6,6 +6,8 @@
  *  See LICENSES/README.md for more information.
  */
 
+#if defined(TARGET_ANDROID)
+
 #include <jni.h>
 #include <sys/stat.h>
 
@@ -165,3 +167,5 @@ int CFileAndroidApp::IoControl(EIoControl request, void* param)
     return 0;
   return 1;
 }
+#endif
+

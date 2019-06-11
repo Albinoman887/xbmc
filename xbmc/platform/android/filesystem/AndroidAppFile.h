@@ -8,6 +8,7 @@
 
 #pragma once
 
+#if defined(TARGET_ANDROID)
 #include "filesystem/IFile.h"
 #include "URL.h"
 #include "string.h"
@@ -47,3 +48,6 @@ private:
   int               m_iconHeight;
 };
 }
+
+#endif
+

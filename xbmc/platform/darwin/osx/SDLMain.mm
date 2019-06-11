@@ -7,6 +7,8 @@
  *  See LICENSES/README.md for more information.
  */
 
+#if !defined(__arm__) && !defined(__aarch64__)
+
 #import "SDL/SDL.h"
 #import "SDLMain.h"
 #import <sys/param.h> /* for MAXPATHLEN */
@@ -567,3 +569,4 @@ int main(int argc, char *argv[])
 
   return status;
 }
+#endif

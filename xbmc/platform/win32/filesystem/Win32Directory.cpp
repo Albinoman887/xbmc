@@ -6,6 +6,7 @@
  *  See LICENSES/README.md for more information.
  */
 
+#ifdef TARGET_WINDOWS
 #include "Win32Directory.h"
 #include "FileItem.h"
 #include "platform/win32/WIN32Util.h"
@@ -243,3 +244,4 @@ bool CWin32Directory::Create(std::wstring path) const
 
   return true;
 }
+#endif // TARGET_WINDOWS

@@ -6,6 +6,7 @@
  *  See LICENSES/README.md for more information.
  */
 
+#if defined(TARGET_DARWIN)
 #if defined(TARGET_DARWIN_IOS)
   #import <Foundation/Foundation.h>
 #else
@@ -37,3 +38,4 @@ void Cocoa_Destroy_AutoReleasePool(void* aPool)
   NSAutoreleasePool* pool = (NSAutoreleasePool* )aPool;
   [pool release];
 }
+#endif

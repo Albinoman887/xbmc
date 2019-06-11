@@ -8,6 +8,8 @@
 
 #pragma once
 
+#if defined(TARGET_DARWIN_OSX)
+
 #include <list>
 #include <string>
 #include <vector>
@@ -91,3 +93,5 @@ protected:
                                              void*                               inClientData);
 
 };
+
+#endif

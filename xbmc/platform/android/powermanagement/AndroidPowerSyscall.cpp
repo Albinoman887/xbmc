@@ -6,6 +6,8 @@
  *  See LICENSES/README.md for more information.
  */
 
+#if defined (TARGET_ANDROID)
+
 #include "AndroidPowerSyscall.h"
 #include "platform/android/activity/XBMCApp.h"
 
@@ -34,3 +36,5 @@ bool CAndroidPowerSyscall::PumpPowerEvents(IPowerEventsCallback *callback)
 {
   return true;
 }
+
+#endif

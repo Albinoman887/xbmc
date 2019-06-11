@@ -8,6 +8,8 @@
 
 #pragma once
 
+#if defined(TARGET_DARWIN_OSX)
+
 #include "threads/Event.h"
 #include <CoreAudio/CoreAudio.h>
 #include <IOKit/audio/IOAudioTypes.h>
@@ -54,3 +56,5 @@ protected:
   AudioStreamBasicDescription m_OriginalVirtualFormat;
   AudioStreamBasicDescription m_OriginalPhysicalFormat;
 };
+
+#endif
