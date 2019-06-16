@@ -2220,7 +2220,7 @@ bool CActiveAE::RunStages()
                 break;
               else
               {
-                int samples = std::min(out->pkt->nb_samples, viz->pkt->max_nb_samples);
+                int samples = std::min(512, buf->pkt->nb_samples);
                 for (auto& it : m_audioCallback)
                   it->OnAudioData((float*)(buf->pkt->data[0]), samples);
                 CLog::Log(LOGDEBUG, "CActiveAE::Buffers for viz - copy samples2");
