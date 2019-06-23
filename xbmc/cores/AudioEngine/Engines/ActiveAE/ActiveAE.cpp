@@ -2201,7 +2201,6 @@ bool CActiveAE::RunStages()
               for(int i= 0; i < out->pkt->planes; i++)
               {
                 memcpy(viz->pkt->data[i], out->pkt->data[i], bytes);
-                CLog::Log(LOGDEBUG, "CActiveAE::Buffers for viz - copy samples1");
               }
               viz->pkt->nb_samples = samples;
               m_vizBuffers->m_inputSamples.push_back(viz);
@@ -2223,7 +2222,6 @@ bool CActiveAE::RunStages()
                 int samples = std::min(512, buf->pkt->nb_samples);
                 for (auto& it : m_audioCallback)
                   it->OnAudioData((float*)(buf->pkt->data[0]), samples);
-                CLog::Log(LOGDEBUG, "CActiveAE::Buffers for viz - copy samples2");
                 buf->Return();
                 m_vizBuffers->m_outputSamples.pop_front();
               }
